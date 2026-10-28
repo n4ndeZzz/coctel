@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0e0b09">
+  <meta name="description" content="Armonía en la diferencia: dos personas distintas, una misma sintonía.">
+  <title>Armonía en la diferencia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Portada -->
+  <section class="screen screen--intro is-active" id="portada" aria-labelledby="portada-titulo">
+    <div class="atmos" aria-hidden="true"><span></span><span></span></div>
+    <div class="intro">
+      <h1 class="intro__title" id="portada-titulo">Aquí no hay carta.</h1>
+      <p class="intro__sub" id="portada-sub">Cuéntanos un poco de ti. Y de alguien más.</p>
+      <button class="btn btn--primary" id="btn-entrar" type="button">Entrar</button>
+      <button class="btn btn--ghost btn--small" id="btn-azar" type="button" hidden>Respuestas al azar (debug)</button>
+    </div>
+    <footer class="credit">Juan José Hernández</footer>
+  </section>
+
+  <!-- Conversación -->
+  <section class="screen screen--talk" id="conversacion" aria-label="Conversación" inert>
+    <div class="progress" aria-hidden="true"><span id="progreso"></span></div>
+    <div class="talk">
+      <p class="talk__who" id="quien"></p>
+      <div class="step" id="paso" aria-live="polite"></div>
+    </div>
+    <nav class="talk__nav" aria-label="Navegación de preguntas">
+      <button class="btn btn--ghost" id="btn-atras" type="button">Atrás</button>
+      <button class="btn btn--primary" id="btn-seguir" type="button">Seguir</button>
+    </nav>
+  </section>
+
+  <!-- Reposo -->
+  <section class="screen screen--rest" id="reposo" aria-live="polite" inert>
+    <p class="rest__text">Déjalo reposar.</p>
+  </section>
+
+  <!-- Simulación -->
+  <section class="screen screen--sim" id="simulacion" aria-label="Dos fluidos en movimiento" inert>
+    <canvas id="lienzo" role="img" aria-label="Dos fluidos de colores distintos que se encuentran y se mezclan lentamente"></canvas>
+    <div class="nogl" id="sin-webgl" hidden>
+      <p class="nogl__title">La mezcla no pudo prepararse aquí.</p>
+      <p class="nogl__text">Este navegador no permite dibujar los fluidos. Prueba desde otro navegador o actualiza el que usas.</p>
+      <button class="btn btn--ghost" type="button" data-accion="reiniciar">Volver a empezar</button>
+    </div>
+    <div class="sim__ui">
+      <button class="btn btn--glass" id="btn-capturar" type="button">Capturar este momento</button>
+    </div>
+    <div class="flash" id="destello" aria-hidden="true"></div>
+  </section>
+
+  <!-- Vista previa de captura -->
+  <div class="preview" id="vista-previa" role="dialog" aria-modal="true" aria-labelledby="frase-cierre" hidden>
+    <div class="preview__card">
+      <figure class="preview__figure">
+        <img id="imagen-captura" alt="Imagen abstracta de dos fluidos de colores distintos entrelazados por un hilo ámbar">
+      </figure>
+      <p class="preview__phrase" id="frase-cierre">Dos fluidos distintos.<br>Una misma sintonía.</p>
+      <div class="preview__actions">
+        <button class="btn btn--primary" id="btn-descargar" type="button">Descargar imagen</button>
+        <button class="btn btn--link" id="btn-enlace" type="button">Copiar enlace</button>
+      </div>
+      <div class="preview__more">
+        <button class="btn btn--ghost" id="btn-seguir-fluyendo" type="button">Seguir fluyendo</button>
+        <button class="btn btn--ghost" type="button" data-accion="reiniciar">Volver a empezar</button>
+      </div>
+      <p class="preview__status" id="estado-captura" role="status" aria-live="polite"></p>
+    </div>
+  </div>
+
+  <pre class="debug" id="debug" hidden></pre>
+
+  <script>
+    // Los módulos ES no cargan desde file://: en vez de fallar en silencio, se explica.
+    if (location.protocol === 'file:') {
+      document.getElementById('btn-entrar').addEventListener('click', function () {
+        var sub = document.getElementById('portada-sub');
+        sub.innerHTML = 'Esta página necesita abrirse desde un servidor, no con doble clic.<br>' +
+          'En la carpeta del proyecto ejecuta <code>python -m http.server 8000</code> ' +
+          'y abre <code>http://localhost:8000</code>.';
+        sub.style.maxWidth = '30rem';
+      });
+    }
+  </script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
